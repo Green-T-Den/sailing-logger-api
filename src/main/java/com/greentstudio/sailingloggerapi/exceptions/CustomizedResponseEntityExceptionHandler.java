@@ -50,9 +50,10 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     /**
      * Handles invalid creation parameters given to POST.
-     * @param ex The triggering exception.
+     *
+     * @param ex      The triggering exception.
      * @param headers The headers to be returned to the client.
-     * @param status The Status code to be returned to the client.
+     * @param status  The Status code to be returned to the client.
      * @param request The incorrect request.
      * @return Returns the exception structure and a 400 Status Code
      */

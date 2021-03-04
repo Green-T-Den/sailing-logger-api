@@ -1,54 +1,46 @@
 package com.greentstudio.sailingloggerapi.boat;
 
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
-import java.util.Date;
+import com.greentstudio.sailingloggerapi.port.Port;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Boat {
-    final private int INT_BOAT_NAME_MIN = 3;
+import javax.persistence.*;
+import java.time.Instant;
+import java.util.Optional;
 
-    private Integer intBoatID;
-    @Size(min=INT_BOAT_NAME_MIN, message = "Name should at least have "+INT_BOAT_NAME_MIN+" characters")
-    private String strBoatName;
-    @Past
-    final private Date dateBoatConstruction;
+/**
+ * Entity class for the Boats.
+ *
+ * @author Luis Martin Schick
+ */
+@Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor //For testing purposes
+public
+class Boat {
 
-    /**
-     * The constructor for the data type Boat.
-     * @param intBoatID Integer. The ID of the boat.
-     * @param strBoatName String. The name of the boat.
-     * @param dateBoatConstruction Date. The date the boat was constructed.
-     */
-    public Boat(Integer intBoatID, String strBoatName, Date dateBoatConstruction) {
-        super();
-        this.intBoatID = intBoatID;
-        this.strBoatName = strBoatName;
-        this.dateBoatConstruction = dateBoatConstruction;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
+    private String strName;
+    private String strColor;
+    private Instant instantBoatConstruction;
 
+    @JsonIgnore //Stops serialization to avoid a recursive, bi-directional relationship
+    @ManyToOne
+    //@JsonBackReference
+    private Port port;
+
+
+    public Boat(String strName, String strColor, Instant instantBoatConstruction, Port port) {
+        this.strName = strName;
+        this.strColor = strColor;
+        this.instantBoatConstruction = instantBoatConstruction;
+        this.port = port;
     }
 
-    public Integer getIntBoatID() {
-        return intBoatID;
-    }
-
-    public void setIntBoatID(Integer intBoatID) {
-        this.intBoatID = intBoatID;
-    }
-
-    public String getStrBoatName() {
-        return strBoatName;
-    }
-
-    public void setStrBoatName(String strBoatName) {
-        this.strBoatName = strBoatName;
-    }
-
-    public Date getDateBoatConstruction() {
-        return dateBoatConstruction;
-    }
-
-    @Override
-    public String toString(){
-        return String.format("Boat[intBoatID=%s, strBoatName=%s, dateBoatConstruction=%s]", intBoatID, strBoatName, dateBoatConstruction);
+    public Optional<Long> getId() {
+        return Optional.ofNullable(this.id);
     }
 }
