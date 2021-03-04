@@ -1,6 +1,5 @@
 ### Sailing Logger API
 This HATEOAS API is the backend for our [Sailing Logger](https://github.com/Green-T-Den/sailing-logger).
-<br/>This branch was completely rewritten to better conform to Spring HATEOAS documentation.
 <br/>Still heavily under development
 
 #### Tech Stack
