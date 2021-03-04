@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SailingLoggerApiApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SailingLoggerApiApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    SpringApplication.run(SailingLoggerApiApplication.class, args);
+  }
 }
