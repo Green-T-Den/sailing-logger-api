@@ -18,6 +18,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 15
+          
+      - name: Google Java Format
+        uses: axel-op/googlejavaformat-action@v3.4.0
+
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
