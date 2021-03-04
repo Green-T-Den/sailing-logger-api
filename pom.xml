@@ -15,6 +15,9 @@
     <description>A sailing logger, allowing users to log their expeditions</description>
     <properties>
         <java.version>15</java.version>
+        <sonar.projectKey>Green-T-Den_sailing-logger-api</sonar.projectKey>
+        <sonar.organization>green-t-den</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <dependencies>
         <dependency>
