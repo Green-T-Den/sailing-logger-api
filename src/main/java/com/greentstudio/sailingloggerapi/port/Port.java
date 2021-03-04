@@ -2,6 +2,7 @@ package com.greentstudio.sailingloggerapi.port;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greentstudio.sailingloggerapi.boat.Boat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor //For testing purposes
 public class Port {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)  private Long id;
     private String strName;
