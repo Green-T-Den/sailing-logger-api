@@ -3,15 +3,21 @@ package com.greentstudio.sailingloggerapi.port;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class PortController {
     private final PortRepository repository;
     private final PortRepresentationModelAssembler assembler;
 
+    /**
+     * {@link RestController} makes the {@link PortController} return responses as JSON instead of templates.
+     * @param repository The {@link PortRepository} which will be injected via constructor injection.
+     * @param assembler The {@link PortRepresentationModelAssembler} that will be injected via constructor injection.
+     */
     public PortController(PortRepository repository, PortRepresentationModelAssembler assembler) {
         this.repository = repository;
         this.assembler = assembler;
@@ -57,5 +63,15 @@ public class PortController {
 
         return ResponseEntity.ok( //
                 assembler.toModel(repository.findByBoatsId(id)));
+    }
+
+    @PostMapping("/ports")
+    public ResponseEntity<EntityModel<Port>> newPort(@RequestBody Port port) {
+        Port savedPort = repository.save(port);
+
+        return savedPort.getId()
+                .map(id -> ResponseEntity.created(
+                        linkTo(methodOn(PortController.class).findOne(id)).toUri()).body(assembler.toModel(savedPort)))
+                .orElse(ResponseEntity.notFound().build());
     }
 }
