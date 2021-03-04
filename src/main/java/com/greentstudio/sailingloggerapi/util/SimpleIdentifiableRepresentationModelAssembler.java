@@ -55,7 +55,7 @@ public class SimpleIdentifiableRepresentationModelAssembler<T> implements Simple
      * combination of information, resources can be defined.
      *
      * @param controllerClass - Spring MVC controller to base links off of
-     * @param relProvider Provides the relations between links.
+     * @param relProvider     Provides the relations between links.
      * @see #setBasePath(String) to adjust base path to something like "/api"/
      */
     public SimpleIdentifiableRepresentationModelAssembler(Class<?> controllerClass, LinkRelationProvider relProvider) {

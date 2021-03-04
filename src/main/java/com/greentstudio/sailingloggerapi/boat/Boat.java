@@ -1,10 +1,10 @@
 package com.greentstudio.sailingloggerapi.boat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greentstudio.sailingloggerapi.port.Port;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -22,7 +22,9 @@ import java.util.Optional;
 public
 class Boat {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String strName;
     private String strColor;
     private Instant instantBoatConstruction;

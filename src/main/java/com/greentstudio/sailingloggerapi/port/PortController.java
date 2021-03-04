@@ -33,6 +33,7 @@ public class PortController {
     /**
      * Get a single {@link Port} matching the given id and transforms it using
      * {@link PortRepresentationModelAssembler#toModel(Object)}.
+     *
      * @param id The id of the boat.
      * @return Returns a {@link ResponseEntity}
      */
@@ -47,11 +48,12 @@ public class PortController {
 
     /**
      * Finds the {@link com.greentstudio.sailingloggerapi.boat.Boat}'s {@link com.greentstudio.sailingloggerapi.port.Port}. Uses the id to match them.
+     *
      * @param id The id of the boat.
      * @return Returns a context-based link .
      */
     @GetMapping("/boats/{id}/port")
-    ResponseEntity<EntityModel<Port>> findPort(@PathVariable long id) {
+    public ResponseEntity<EntityModel<Port>> findPort(@PathVariable long id) {
 
         return ResponseEntity.ok( //
                 assembler.toModel(repository.findByBoatsId(id)));

@@ -14,8 +14,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class RootController {
 
     @GetMapping("/")
-    public ResponseEntity<RepresentationModel> root() {
-        RepresentationModel model = new RepresentationModel();
+    public ResponseEntity<RepresentationModel<?>> root() {
+        RepresentationModel<?> model = new RepresentationModel<>();
 
         model.add(linkTo(methodOn(RootController.class).root()).withSelfRel());
         model.add(linkTo(methodOn(BoatController.class).findAll()).withRel("boats"));

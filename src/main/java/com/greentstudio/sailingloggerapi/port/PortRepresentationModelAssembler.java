@@ -29,10 +29,10 @@ public class PortRepresentationModelAssembler extends SimpleIdentifiableRepresen
         super.addLinks(resource); //Keep default links
 
         Objects.requireNonNull(resource.getContent()).getId()
-                .ifPresent(id -> {
-                    //Add custom link for all corresponding boats.
-                    resource.add(linkTo(methodOn(BoatController.class).findPorts(id)).withRel("boats"));
-                });
+                .ifPresent(id ->
+                        //Add custom link for all corresponding boats.
+                        resource.add(linkTo(methodOn(BoatController.class).findPorts(id)).withRel("boats"))
+                );
     }
 
     /**

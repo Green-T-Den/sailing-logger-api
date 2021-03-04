@@ -21,7 +21,9 @@ import java.util.Optional;
 @NoArgsConstructor
 @AllArgsConstructor //For testing purposes
 public class Port {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String strName;
 
     @JsonIgnore //Stops serialization to avoid a recursive, bi-directional relationship
@@ -29,11 +31,11 @@ public class Port {
     //@JsonManagedReference
     private List<Boat> boats = new ArrayList<>();
 
-    public Port(String strName){
-        this.strName=strName;
+    public Port(String strName) {
+        this.strName = strName;
     }
 
-    public Optional<Long> getId(){
+    public Optional<Long> getId() {
         return Optional.ofNullable(this.id);
     }
 }

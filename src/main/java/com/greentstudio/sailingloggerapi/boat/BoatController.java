@@ -1,6 +1,5 @@
 package com.greentstudio.sailingloggerapi.boat;
 
-import lombok.AllArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Links;
@@ -35,6 +34,7 @@ public class BoatController {
     /**
      * Get a single {@link Boat} matching the given id and transforms it using
      * {@link BoatRepresentationModelAssembler#toModel(Object)}.
+     *
      * @param id The id of the boat.
      * @return Returns a {@link ResponseEntity}
      */
@@ -48,6 +48,7 @@ public class BoatController {
 
     /**
      * Finds the {@link Boat}'s {@link com.greentstudio.sailingloggerapi.port.Port}. Uses the id to match them.
+     *
      * @param id The id of the boat.
      * @return Returns a context-based link .
      */

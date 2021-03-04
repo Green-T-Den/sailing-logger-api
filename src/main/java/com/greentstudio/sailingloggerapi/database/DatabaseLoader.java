@@ -14,7 +14,6 @@ import java.util.Arrays;
 @Component
 public class DatabaseLoader {
 
-    //TODO finish DB implementation
 
     @Bean
     CommandLineRunner initDatabase(BoatRepository boatRepository, PortRepository portRepository) {
@@ -23,7 +22,7 @@ public class DatabaseLoader {
             //Load Port of Hamburg
             Port portHamburg = portRepository.save(new Port("Hamburg"));
             Boat boatBoatyMcBoat = boatRepository.save(new Boat("BoatyMcBoat", "Green", Instant.now(), portHamburg));
-            Boat boatBooat = boatRepository.save(new Boat("Booat", "Red",  Instant.now(), portHamburg));
+            Boat boatBooat = boatRepository.save(new Boat("Booat", "Red", Instant.now(), portHamburg));
 
             portHamburg.setBoats(Arrays.asList(boatBoatyMcBoat, boatBooat));
             portRepository.save(portHamburg);

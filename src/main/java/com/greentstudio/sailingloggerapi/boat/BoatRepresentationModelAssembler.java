@@ -32,10 +32,10 @@ public class BoatRepresentationModelAssembler extends SimpleIdentifiableRepresen
 
         super.addLinks(resource);
         Objects.requireNonNull(resource.getContent()).getId()
-                .ifPresent(id -> { //
-                    // Add additional link(s)
-                    resource.add(linkTo(methodOn(PortController.class).findOne(id)).withRel("port"));
-                });
+                .ifPresent(id ->
+                        // Add additional link(s)
+                        resource.add(linkTo(methodOn(PortController.class).findOne(id)).withRel("port"))
+                );
     }
 
     /**
