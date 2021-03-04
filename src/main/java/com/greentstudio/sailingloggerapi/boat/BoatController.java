@@ -4,9 +4,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Links;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -65,4 +63,18 @@ public class BoatController {
         return ResponseEntity.ok(CollectionModel.of(collectionModel.getContent(), newLinks));
     }
 
+    /**
+     * Saves the given Boat to the database.
+     * @param boat The boat to be saved.
+     * @return Returns a context-based link.
+     */
+    @PostMapping("/boats")
+    public ResponseEntity<EntityModel<Boat>> newBoat(@RequestBody Boat boat) {
+        Boat savedBoat = repository.save(boat);
+
+        return savedBoat.getId()
+                .map(id -> ResponseEntity.created(
+                        linkTo(methodOn(BoatController.class).findOne(id)).toUri()).body(assembler.toModel(savedBoat)))
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

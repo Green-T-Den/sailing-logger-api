@@ -15,8 +15,9 @@ public class PortController {
 
     /**
      * {@link RestController} makes the {@link PortController} return responses as JSON instead of templates.
+     *
      * @param repository The {@link PortRepository} which will be injected via constructor injection.
-     * @param assembler The {@link PortRepresentationModelAssembler} that will be injected via constructor injection.
+     * @param assembler  The {@link PortRepresentationModelAssembler} that will be injected via constructor injection.
      */
     public PortController(PortRepository repository, PortRepresentationModelAssembler assembler) {
         this.repository = repository;
@@ -64,7 +65,11 @@ public class PortController {
         return ResponseEntity.ok( //
                 assembler.toModel(repository.findByBoatsId(id)));
     }
-
+    /**
+     * Saves the given port to the database.
+     * @param port The port to be saved.
+     * @return Returns a context-based link.
+     */
     @PostMapping("/ports")
     public ResponseEntity<EntityModel<Port>> newPort(@RequestBody Port port) {
         Port savedPort = repository.save(port);
