@@ -1,21 +1,26 @@
 package com.greentstudio.sailingloggerapi.boat;
 
+import com.greentstudio.sailingloggerapi.port.PortRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Links;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class BoatController {
-    private final BoatRepository repository;
+    private final BoatRepository boatRepository;
+    private final PortRepository portRepository;
     private final BoatRepresentationModelAssembler assembler;
 
-    BoatController(BoatRepository repository, BoatRepresentationModelAssembler assembler) {
-        this.repository = repository;
+    BoatController(BoatRepository repository, PortRepository portRepository, BoatRepresentationModelAssembler assembler) {
+        this.boatRepository = repository;
+        this.portRepository = portRepository;
         this.assembler = assembler;
     }
 
@@ -26,7 +31,7 @@ public class BoatController {
      */
     @GetMapping("/boats")
     public ResponseEntity<CollectionModel<EntityModel<Boat>>> findAll() {
-        return ResponseEntity.ok(assembler.toCollectionModel(repository.findAll()));
+        return ResponseEntity.ok(assembler.toCollectionModel(boatRepository.findAll()));
     }
 
     /**
@@ -38,7 +43,7 @@ public class BoatController {
      */
     @GetMapping("/boats/{id}")
     public ResponseEntity<EntityModel<Boat>> findOne(@PathVariable long id) {
-        return repository.findById(id)
+        return boatRepository.findById(id)
                 .map(assembler::toModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -55,7 +60,7 @@ public class BoatController {
     public ResponseEntity<CollectionModel<EntityModel<Boat>>> findPorts(@PathVariable long id) {
 
         CollectionModel<EntityModel<Boat>> collectionModel = assembler
-                .toCollectionModel(repository.findByPortId(id));
+                .toCollectionModel(boatRepository.findByPortId(id));
 
         Links newLinks = collectionModel.getLinks().merge(Links.MergeMode.REPLACE_BY_REL,
                 linkTo(methodOn(BoatController.class).findPorts(id)).withSelfRel());
@@ -68,13 +73,28 @@ public class BoatController {
      * @param boat The boat to be saved.
      * @return Returns a context-based link.
      */
-    @PostMapping("/boats")
-    public ResponseEntity<EntityModel<Boat>> newBoat(@RequestBody Boat boat) {
-        Boat savedBoat = repository.save(boat);
+    @PostMapping("/ports/{port_id}/boats")
+    public ResponseEntity<EntityModel<Boat>> newBoat( @RequestBody Boat boat, @PathVariable Long port_id) {
+        boat.setPort((portRepository.findById(port_id).orElse(null)));
+        Boat savedBoat = boatRepository.save(boat);
 
         return savedBoat.getId()
                 .map(id -> ResponseEntity.created(
                         linkTo(methodOn(BoatController.class).findOne(id)).toUri()).body(assembler.toModel(savedBoat)))
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    /*
+    @PutMapping("/boats/{id}")
+    public ResponseEntity<EntityModel<Boat>> replaceBoat(@RequestBody EntityModel<Boat> newBoat, @PathVariable Long id) {
+        return newBoat.getId(id)
+                .map(id -> ResponseEntity.created(
+                        linkTo(methodOn(BoatController.class).findOne(id)).toUri()).body(assembler.toModel(newBoat)               ))
+                .orElseGet(() -> {
+                   newBoat.setId(id);
+                   return ResponseEntity<repository.save(newBoat)>;
+                });
+    }
+    */
+
 }

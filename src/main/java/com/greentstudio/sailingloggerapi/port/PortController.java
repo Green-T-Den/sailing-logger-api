@@ -5,6 +5,8 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -32,7 +34,7 @@ public class PortController {
     @GetMapping("/ports")
     public ResponseEntity<CollectionModel<EntityModel<Port>>> findAll() {
 
-        return ResponseEntity.ok( //
+        return ResponseEntity.ok(
                 assembler.toCollectionModel(repository.findAll()));
 
     }
@@ -47,9 +49,9 @@ public class PortController {
     @GetMapping("/ports/{id}")
     public ResponseEntity<EntityModel<Port>> findOne(@PathVariable long id) {
 
-        return repository.findById(id) //
-                .map(assembler::toModel) //
-                .map(ResponseEntity::ok) //
+        return repository.findById(id)
+                .map(assembler::toModel)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -62,7 +64,7 @@ public class PortController {
     @GetMapping("/boats/{id}/port")
     public ResponseEntity<EntityModel<Port>> findPort(@PathVariable long id) {
 
-        return ResponseEntity.ok( //
+        return ResponseEntity.ok(
                 assembler.toModel(repository.findByBoatsId(id)));
     }
     /**
@@ -71,7 +73,7 @@ public class PortController {
      * @return Returns a context-based link.
      */
     @PostMapping("/ports")
-    public ResponseEntity<EntityModel<Port>> newPort(@RequestBody Port port) {
+    public ResponseEntity<EntityModel<Port>> newPort(@Valid @RequestBody Port port) {
         Port savedPort = repository.save(port);
 
         return savedPort.getId()

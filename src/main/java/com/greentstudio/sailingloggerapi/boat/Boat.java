@@ -2,11 +2,13 @@ package com.greentstudio.sailingloggerapi.boat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greentstudio.sailingloggerapi.port.Port;
+import com.greentstudio.sailingloggerapi.port.PortRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.Optional;
 
@@ -32,6 +34,7 @@ class Boat {
     @JsonIgnore //Stops serialization to avoid a recursive, bi-directional relationship
     @ManyToOne
     //@JsonBackReference
+    //@NotNull(message = "You must add a port.")
     private Port port;
 
 
@@ -40,6 +43,12 @@ class Boat {
         this.strColor = strColor;
         this.instantBoatConstruction = instantBoatConstruction;
         this.port = port;
+    }
+
+    public Boat(String strName, String strColor, Instant instantBoatConstruction) {
+        this.strName = strName;
+        this.strColor = strColor;
+        this.instantBoatConstruction = instantBoatConstruction;
     }
 
     public Optional<Long> getId() {
