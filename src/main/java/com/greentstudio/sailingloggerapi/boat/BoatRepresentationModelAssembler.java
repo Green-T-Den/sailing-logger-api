@@ -34,10 +34,9 @@ public class BoatRepresentationModelAssembler
         .getId()
         .ifPresent(
             id ->
-                        // Add additional link(s)
-                        resource.add(linkTo(methodOn(PortController.class).findPort(id)).withRel("port"))
-                );
-    }
+                // Add additional link(s)
+                resource.add(linkTo(methodOn(PortController.class).findPort(id)).withRel("port")));
+  }
 
   /**
    * Define links to add to {@link CollectionModel} collection.

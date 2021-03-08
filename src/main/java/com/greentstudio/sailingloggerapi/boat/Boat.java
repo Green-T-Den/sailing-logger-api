@@ -5,15 +5,9 @@ import com.greentstudio.sailingloggerapi.port.Port;
 import java.time.Instant;
 import java.util.Optional;
 import javax.persistence.*;
-import com.greentstudio.sailingloggerapi.port.PortRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.Instant;
-import java.util.Optional;
 
 /**
  * Entity class for the Boats.
@@ -37,7 +31,7 @@ public class Boat {
   @JsonIgnore // Stops serialization to avoid a recursive, bi-directional relationship
   @ManyToOne
   // @JsonBackReference
-    //@NotNull(message = "You must add a port.")
+  // @NotNull(message = "You must add a port.")
   private Port port;
 
   public Boat(String strName, String strColor, Instant instantBoatConstruction, Port port) {
@@ -47,11 +41,11 @@ public class Boat {
     this.port = port;
   }
 
-    public Boat(String strName, String strColor, Instant instantBoatConstruction) {
-        this.strName = strName;
-        this.strColor = strColor;
-        this.instantBoatConstruction = instantBoatConstruction;
-    }
+  public Boat(String strName, String strColor, Instant instantBoatConstruction) {
+    this.strName = strName;
+    this.strColor = strColor;
+    this.instantBoatConstruction = instantBoatConstruction;
+  }
 
   public Optional<Long> getId() {
     return Optional.ofNullable(this.id);

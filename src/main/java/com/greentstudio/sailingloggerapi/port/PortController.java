@@ -3,13 +3,11 @@ package com.greentstudio.sailingloggerapi.port;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import javax.validation.Valid;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-
 
 @RestController
 public class PortController {
@@ -37,8 +35,7 @@ public class PortController {
   @GetMapping("/ports")
   public ResponseEntity<CollectionModel<EntityModel<Port>>> findAll() {
 
-        return ResponseEntity.ok(
-        assembler.toCollectionModel(repository.findAll()));
+    return ResponseEntity.ok(assembler.toCollectionModel(repository.findAll()));
   }
 
   /**
@@ -50,7 +47,6 @@ public class PortController {
    */
   @GetMapping("/ports/{id}")
   public ResponseEntity<EntityModel<Port>> findOne(@PathVariable long id) {
-
 
     return repository
         .findById(id) //
@@ -69,8 +65,7 @@ public class PortController {
   @GetMapping("/boats/{id}/port")
   public ResponseEntity<EntityModel<Port>> findPort(@PathVariable long id) {
 
-        return ResponseEntity.ok(
-        assembler.toModel(repository.findByBoatsId(id)));
+    return ResponseEntity.ok(assembler.toModel(repository.findByBoatsId(id)));
   }
   /**
    * Saves the given port to the database.
@@ -79,7 +74,7 @@ public class PortController {
    * @return Returns a context-based link.
    */
   @PostMapping("/ports")
-    public ResponseEntity<EntityModel<Port>> newPort(@Valid @RequestBody Port port) {
+  public ResponseEntity<EntityModel<Port>> newPort(@Valid @RequestBody Port port) {
     Port savedPort = repository.save(port);
 
     return savedPort
