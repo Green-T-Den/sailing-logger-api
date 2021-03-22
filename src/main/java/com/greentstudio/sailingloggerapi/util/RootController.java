@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RootController {
 
   @SuppressWarnings("rawtypes")
-  @GetMapping("/")
+  @GetMapping("/api")
   public ResponseEntity<RepresentationModel> root() {
     RepresentationModel model = new RepresentationModel();
 
